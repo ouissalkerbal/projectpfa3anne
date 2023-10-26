@@ -1,0 +1,128 @@
+<!-- app/templates/service_commercial.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Service Commercial</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/service_commercial.css' %}">
+    <!-- Add this script tag to the service_commercial.html template -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Add this script tag to the service_commercial.html template -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            function fetchMessages() {
+                $.ajax({
+                    url: '/fetch_messages/',  // URL to fetch new messages
+                    method: 'GET',
+                    success: function (data) {
+                        // Append new messages to the message list
+                        $.each(data.messages, function (index, message) {
+                            // Append the new message to the .ajax-messages list
+                            var messageItem = $('<li>' + message.message + '</li>');
+                            if (message.success) {
+                                messageItem.addClass('success'); // Apply success message style
+                            }
+                            $('.ajax-messages').append(messageItem);
+                        });
+                    },
+                    complete: function () {
+                        // Schedule the next fetch after a delay (e.g., every 5 seconds)
+                        setTimeout(fetchMessages, 5000);
+                    }
+                });
+            }
+    
+            // Start fetching messages
+            fetchMessages();
+        });
+    </script>
+    
+
+</head>
+<body>
+    <div class="container">
+        <h1>Bon de commande 'Atelier'</h1>
+        {% if messages %}
+        <ul class="django-messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="form-row">
+                <div class="form-group" style="background-color: #ff9999;"> <!-- Red background -->
+                    <label for="n_commande">N Commande:</label>
+                    <input type="number" name="n_commande" required>
+                </div>
+                <div class="form-group" style="background-color: #99ff99;"> <!-- Green background -->
+                    <label for="nombre_de_jaretiere">Nombre de Jaretiere:</label>
+                    <input type="text" name="nombre_de_jaretiere" required>
+                </div>
+                <div class="form-group" style="background-color: #9999ff;"> <!-- Blue background -->
+                    <label for="type_de_cable">Type de Cable:</label>
+                    <select name="type_de_cable" required>
+                        <option value="" disabled selected>Choisir un type de câble</option>
+                        {% for type_de_cable in types_de_cable %}
+                            <option value="{{ type_de_cable.id }}">{{ type_de_cable.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                
+                <div class="form-group" style="background-color: #ffff99;"> <!-- Yellow background -->
+                    <label for="type_de_connecteurs">Type de Connecteurs:</label>
+                    <select name="type_de_connecteurs" required>
+                        <option value="" disabled selected>Choisir un type de connecteur</option>
+                        {% for type_de_connecteurs in types_de_connecteurs %}
+                            <option value="{{ type_de_connecteurs.id }}">{{ type_de_connecteurs.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                
+                <div class="form-group" style="background-color: #ffcc99;"> <!-- Orange background -->
+                    <label for="delai_de_livraison">Delai de Livraison:</label>
+                    <input type="text" name="delai_de_livraison" required>
+                </div>
+                <div class="form-group" style="background-color: #cc99ff;"> <!-- Purple background -->
+                    <label for="metrage">Metrage:</label>
+                    <input type="text" name="metrage" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="date_field"> <!-- Light Blue background -->
+                    Date:
+                    <input type="date" name="date_field" required>
+                </label>
+            </div>
+            
+            <div class="form-group"> <!-- Pink background -->
+                <label for="city_field">Ville:</label>
+                <input type="text" name="city_field" required>
+            </div>
+            
+            <button type="submit" class="btn-primary">Valider&nbsp;<i class="fas fa-check"></i></button>
+        </form>
+     
+        <div class="message-section">
+            <h2>Messages</h2>
+            <ul class="ajax-messages">
+                <!-- Messages received via AJAX will be displayed here -->
+            </ul>
+        </div>
+
+        <div class="return-button-container">
+            <a href="{% url 'app:home' %}" class="return-button"><i class="fas fa-arrow-left"></i></a>
+        </div>
+
+    </div>
+</body>
+</html>

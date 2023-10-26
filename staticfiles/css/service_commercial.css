@@ -1,0 +1,133 @@
+/* app/static/css/service_commercial.css */
+
+body {
+    background-color: #f0f5f9; /* Light grayish-blue background */
+    font-family: Arial, sans-serif;
+    color: #333; /* Dark text color */
+}
+/* Page container */
+.container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
+    border-radius: 8px;
+}
+
+/* Page title */
+h1 {
+    font-size: 36px; /* Increased font size */
+    margin-bottom: 30px; /* Increased margin for separation */
+    border: none; /* Remove the border */
+    padding: 0;
+}
+
+/* Form group */
+.form-group {
+    margin-bottom: 10px; /* Adjust spacing between form groups */
+}
+
+/* Label styling */
+.form-group label {
+    font-weight: bold;
+    color: #555;
+    margin-left: 12px;
+
+}
+
+.form-group input {
+    padding-bottom: 30px;
+    margin-top: 7px
+}
+
+.form-group select {
+    padding-bottom: 30px;
+    margin-top: 7px
+}
+
+/* Form input styling */
+.form-control {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 18px;
+    width: 100%;
+}
+
+/* Submit button */
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    padding: 12px 20px;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    /* flex-wrap: wrap; */ /* Remove wrapping */
+    margin-bottom: 30px;
+}
+.messages {
+    list-style: none;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #008000;
+    background-color: #d0ffd0;
+    color: #008000;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.messages.success {
+    border-color: #008000;
+    background-color: #d0ffd0;
+    color: #008000;
+}
+
+/* Return Button Container */
+.return-button-container {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 999; /* Ensure it's above other content */
+}
+
+/* Return Button */
+/* app/static/css/service_commercial.css */
+
+/* ... (existing styles) */
+
+/* Return Button */
+.return-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #007BFF;
+    color: white;
+    text-align: center;
+    line-height: 50px;
+    border-radius: 50%;
+    font-size: 24px;
+    text-decoration: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+/* Return Button Hover */
+.return-button:hover {
+    background-color: #0056b3;
+}
+
+

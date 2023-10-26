@@ -1,0 +1,41 @@
+<!-- atelier.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Atelier Page</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/atelier.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+</head>
+<body>
+    <div class="container">
+        <h1>Atelier Page</h1>
+        <div class="options">
+
+            
+            <a href="{% url 'app:notifications' %}" class="option-button">
+                <i class="fas fa-bell"></i> Notifications
+                {% if unviewed_purchase_orders.count > 0 %}
+                    <span class="badge badge-danger">{{ unviewed_purchase_orders.count }}</span>
+                {% endif %}
+            </a>        
+            
+            
+
+
+            <a href="{% url 'app:bon_de_commande' %}" class="option-button">
+                <i class="fas fa-file-alt"></i> Bon de commande
+            </a>
+
+
+
+        </div>
+        <!-- Display notifications and Bon de commande content here -->
+    </div>
+    <div class="return-button-container">
+        <a href="{% url 'app:home' %}" class="return-button"><i class="fas fa-arrow-left"></i></a>
+    </div>
+</body>
+</html>

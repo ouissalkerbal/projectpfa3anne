@@ -1,0 +1,68 @@
+<!-- bon_de_commande.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bon de commande Page</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bon_de_commande.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-file-alt"></i> Liste des Commandes à l'Atelier</h1>
+
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <div class="search-input-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="search-input" class="search-input" placeholder="Rechercher par N Commande">
+            </div>
+            <button type="button" id="search-button" class="search-button">
+                <i class="fas fa-search"></i> Rechercher
+            </button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th><i class="fas fa-list-ol"></i> N Commande</th>
+                    <th><i class="far fa-calendar"></i> Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for purchase_order in atelier_orders %}
+                    <tr>
+                        <td><a href="{% url 'app:purchase_order_detail' purchase_order.id %}">{{ purchase_order.n_commande }}</a></td>
+                        <td>{{ purchase_order.date_field }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="return-button-container">
+        <a href="{% url 'app:service_atelier' %}" class="return-button"><i class="fas fa-arrow-left"></i></a>
+    </div>
+
+    <!-- JavaScript to handle dynamic filtering -->
+    <script>
+        const searchInput = document.getElementById("search-input");
+        const tableRows = document.querySelectorAll("tbody tr");
+
+        searchInput.addEventListener("input", () => {
+            const searchTerm = searchInput.value.trim().toLowerCase();
+
+            tableRows.forEach((row) => {
+                const cell = row.querySelector("td:first-child");
+                const nCommande = cell.textContent.trim().toLowerCase();
+
+                if (nCommande.includes(searchTerm)) {
+                    row.style.display = ""; // Show the row
+                } else {
+                    row.style.display = "none"; // Hide the row
+                }
+            });
+        });
+    </script>
+</body>
+</html>

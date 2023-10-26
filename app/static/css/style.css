@@ -1,0 +1,63 @@
+/* app/static/css/style.css */
+body {
+    background-color: #f0f5f9; /* Light grayish-blue background */
+    font-family: Arial, sans-serif;
+    color: #333; /* Dark text color */
+    font-family: 'Roboto Slab', serif;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    border: 2px solid black;
+    padding: 20px;
+}
+
+.title {
+    font-size: 36px; /* Increased font size */
+    margin-bottom: 30px; /* Increased margin for separation */
+    border: none; /* Remove the border */
+    padding: 0; /* Remove padding */
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.btn {
+    margin: 10px;
+    padding: 12px 24px; /* Increased padding for a more clickable area */
+    background-color: #007bff; /* Blue primary color */
+    color: white;
+    border: none; /* Remove border for a cleaner look */
+    text-decoration: none;
+    font-size: 18px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Add a subtle shadow on hover */
+}
+
+.btn i {
+    margin-left: 10px; /* Add space between text and icon */
+}
+
+.btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Secondary button style */
+.btn-secondary {
+    background-color: #6c757d; /* Gray secondary color */
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268; /* Darker gray on hover */
+}

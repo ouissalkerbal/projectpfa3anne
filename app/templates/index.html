@@ -1,0 +1,96 @@
+<!-- app/templates/index.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bonde Commande Web App</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/90a29ae9df.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="{% static 'images/1.png' %}" alt="Your Logo">
+        </div>
+        <h1 class="title">Bienvenue à l'application Bon de commande</h1>
+        <div class="button-container">
+            <a href="#" class="btn btn-secondary" onclick="checkPassword('service_commercial')">
+                <i class="fas fa-shopping-cart"></i> <!-- Shopping cart icon -->
+                <span class="btn-text">Service Comercial</span>
+            </a>
+            <a href="#" class="btn btn-secondary" onclick="checkPassword('atelier')">
+                <i class="fas fa-tools"></i> <!-- Tools icon -->
+                <span class="btn-text">Atelier</span>
+            </a>
+            <a href="#" class="btn btn-primary" onclick="checkPassword('admin')">
+                <i class="fas fa-user-cog"></i> <!-- User cog icon -->
+                <span class="btn-text">Admin</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        async function checkPassword(section) {
+            let password = '';
+            
+            // Set the password based on the section
+            if (section === 'service_commercial') {
+                password = '123456';
+            } else if (section === 'atelier') {
+                password = '654321';
+            } else if (section === 'admin') {
+                password = 'admin';
+            }
+
+            const { value: inputPassword } = await Swal.fire({
+                title: `Enter the password for ${section}:`,
+                input: 'password',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Submit',
+                cancelButtonText: 'Cancel',
+                customClass: {
+                    container: 'swal-container',
+                    title: 'swal-title',
+                    input: 'swal-input',
+                    cancelButton: 'swal-cancel-button',
+                    confirmButton: 'swal-confirm-button'
+                }
+            });
+
+            if (inputPassword === password) {
+                // Password is correct, redirect to the respective section
+                if (section === 'service_commercial') {
+                    window.location.href = "{% url 'app:service_commercial' %}";
+                } else if (section === 'atelier') {
+                    window.location.href = "{% url 'app:service_atelier' %}";
+                } else if (section === 'admin') {
+                    window.location.href = "{% url 'admin:index' %}";
+                }
+            } else {
+                // Display a SweetAlert2 modal for access denied
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Access Denied',
+                    text: 'Incorrect password. Access denied.',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        container: 'swal-container',
+                        title: 'swal-title',
+                        text: 'swal-text',
+                        confirmButton: 'swal-confirm-button'
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

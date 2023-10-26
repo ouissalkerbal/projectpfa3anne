@@ -1,0 +1,100 @@
+<!--notifications.html-->z
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Notifications</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/notifications.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const messageForm = document.getElementById("message-form");
+            const messageInput = document.getElementById("message-input");
+            
+            messageForm.addEventListener("submit", function(event) {
+                event.preventDefault();
+
+                // Get the message from the input field
+                const message = messageInput.value;
+
+                // Send a POST request to save the message
+                fetch('/save_message/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: `message=${encodeURIComponent(message)}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        // Message saved successfully, display a confirmation message
+                        alert('Message saved successfully');
+                        messageInput.value = '';  // Clear the input field
+                    } else {
+                        alert('Error saving message');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while saving the message');
+                });
+            });
+
+            // Function to get the CSRF token cookie
+            function getCookie(name) {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return parts.pop().split(';').shift();
+            }
+        });
+    </script>
+</head>
+</head>
+<body>
+    <h1><i class="fas fa-bell"></i> Notifications</h1>
+
+{% if unviewed_purchase_orders %}
+    {% for purchase_order in unviewed_purchase_orders %}
+    <div class="notification">
+        <h2>New Purchase Order <i class="fas fa-file-alt"></i></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th><i class="fas fa-list-ol"></i> N Commande</th>
+                    <th><i class="far fa-calendar"></i> Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="{% url 'app:purchase_order_detail' purchase_order.id %}">{{ purchase_order.n_commande }}</a></td>
+                    <td>{{ purchase_order.date_field }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>Aucun bon de commande aujourd'hui <i class="far fa-smile"></i></p>
+{% endif %}
+
+
+    <div class="message-box">
+        <h2>Message Box</h2>
+        <form method="post" id="message-form">
+            {% csrf_token %}
+            <input type="text" name="message" id="message-input" placeholder="Type your message...">
+            <button type="submit" id="send-button">Envoyer</button>
+        </form>
+    </div>
+
+</div>
+</div>
+<div class="return-button-container">
+    <a href="{% url 'app:service_atelier' %}" class="return-button"><i class="fas fa-arrow-left"></i></a>
+</div>
+</body>
+</html>
